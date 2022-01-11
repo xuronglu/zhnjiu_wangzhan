@@ -1,0 +1,195 @@
+
+<!DOCTYPE HTML>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta name="renderer" content="webkit|ie-comp|ie-stand">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1.0,maximum-scale=1.0,user-scalable=no" />
+    <meta http-equiv="Cache-Control" content="no-siteapp" />
+    <!--[if lt IE 9]-->
+    <script type="text/javascript" src="/static/admin/lib/lib/html5shiv.js"></script>
+    <script type="text/javascript" src="/static/admin/lib/lib/respond.min.js"></script>
+    <!--[endif]-->
+    <link rel="stylesheet" type="text/css" href="/static/admin/lib/static/h-ui/css/H-ui.min.css" />
+    <link rel="stylesheet" type="text/css" href="/static/admin/lib/static/h-ui.admin/css/H-ui.admin.css" />
+    <link rel="stylesheet" type="text/css" href="/static/admin/lib/lib/Hui-iconfont/1.0.8/iconfont.css" />
+    <link rel="stylesheet" type="text/css" href="/static/admin/lib/static/h-ui.admin/skin/default/skin.css" id="skin" />
+    <link rel="stylesheet" type="text/css" href="/static/admin/lib/static/h-ui.admin/css/style.css" />
+    <!--[if IE 6]-->
+    <script type="text/javascript" src="/static/admin/lib/lib/DD_belatedPNG_0.0.8a-min.js" ></script>
+    <script>DD_belatedPNG.fix('*');</script>
+    <!--[endif]-->
+    <title>新增图片</title>
+    <link href="/static/admin/lib/lib/webuploader/0.1.5/webuploader.css" rel="stylesheet" type="text/css" />
+    <style>
+        img[src=""],img:not([src]){
+            opacity:0;
+        }
+    </style>
+</head>
+<body>
+<div class="page-container">
+    <form class="form form-horizontal" id="form-article-add" enctype="multipart/form-data">
+        <div class="row cl">
+            <label class="form-label col-xs-4 col-sm-2"><span class="c-red">*</span>请选择栏位：</label>
+            <div class="formControls col-xs-8 col-sm-9">
+                <span class="select-box">
+                  <select class="select" id="select" size="1" name="demo1">
+                    <option value="{$data.status}" selected>
+                        {switch name="$data.status"}
+						{case value="1"}
+							品牌活动
+						{/case}
+						{case value="2"}
+							紫红泥文景
+						{/case}
+                        {case value="3"}
+							紫红泥研究院
+						{/case}
+                        {default /}无效数据
+						{/switch}
+                    </option>
+                    <option value="1">品牌活动</option>
+                    <option value="2">紫红泥文集</option>
+                    <option value="3">紫红泥研究院</option>
+                  </select>
+                </span>
+            </div>
+        </div>
+        <div class="row cl">
+            <label class="form-label col-xs-4 col-sm-2">标题：</label>
+            <div class="formControls col-xs-8 col-sm-9">
+                <input type="text" maxlength="50" data-id="{$data.act_id}" class="input-text" value="{$data.title}" placeholder="" id="title" name="">
+            </div>
+        </div>
+        <div class="row cl">
+            <label class="form-label col-xs-4 col-sm-2"><span class="c-red">*</span>广告图跳转地址：</label>
+            <div class="formControls col-xs-8 col-sm-9">
+                <input type="text" class="input-text" value="{$data.act_url}" placeholder="" id="url" name="">
+            </div>
+        </div>
+        <div class="row cl">
+
+            <label class="form-label col-xs-4 col-sm-2"><span class="c-red">*</span>图片上传：</label>
+            <div class="formControls col-xs-8 col-sm-9">
+                <input type="file" id="photoFile" value="" name="photoFile" onchange="upload()">
+                <input type="hidden" id="hidden" value="" name="hidden">
+                <div style="background-color: rgb(108, 117, 125);height: 200px;">
+                    <img id="img" data-id="{$data.act_id}" style="height: 200px;" src="/storage/{$data.act_img}" >
+                </div>
+            </div>
+        </div>
+        <div class="row cl">
+            <div class="col-xs-8 col-sm-9 col-xs-offset-4 col-sm-offset-2">
+                <button onClick="article_save_submit();" class="btn btn-primary radius" type="button"><i class="Hui-iconfont">&#xe632;</i> 提交</button>
+                <button onClick="layer_close();" class="btn btn-default radius" type="button">&nbsp;&nbsp;取消&nbsp;&nbsp;</button>
+            </div>
+        </div>
+    </form>
+</div>
+
+
+<!--_footer 作为公共模版分离出去-->
+<script type="text/javascript" src="/static/admin/lib/lib/jquery/1.9.1/jquery.min.js"></script>
+<script type="text/javascript" src="/static/admin/lib/lib/layer/2.4/layer.js"></script>
+<script type="text/javascript" src="/static/admin/lib/static/h-ui/js/H-ui.min.js"></script>
+<script type="text/javascript" src="/static/admin/lib/static/h-ui.admin/js/H-ui.admin.js"></script> <!--/_footer /作为公共模版分离出去-->
+
+<!--请在下方写此页面业务相关的脚本-->
+<script type="text/javascript" src="/static/admin/lib/lib/jquery.validation/1.14.0/jquery.validate.js"></script>
+<script type="text/javascript" src="/static/admin/lib/lib/jquery.validation/1.14.0/validate-methods.js"></script>
+<script type="text/javascript" src="/static/admin/lib/lib/jquery.validation/1.14.0/messages_zh.js"></script>
+<script type="text/javascript" src="/static/admin/lib/lib/webuploader/0.1.5/webuploader.min.js"></script>
+<script type="text/javascript">
+    /**
+     * 上传图片
+     */
+    function upload() {
+        var formData = new FormData();
+        var id = $("#img").attr("data-id");
+        var files = document.getElementById('photoFile').files[0];
+        formData.append("id", id);
+        formData.append("photo", files);
+        var tishi = layer.open({
+			shadeClose: false
+			,type: 2
+			,content: '发布中...'
+		});
+        $.ajax({
+            url:"brandNewsEditAction",
+            type:"POST",
+            data: formData,
+            cache: false,
+            contentType: false,
+            processData: false,
+            success: function(data) {
+                if (data.status == "200") {
+                    $("#img").attr("src","/storage/"+data.img);
+                    layer.msg('替换成功!',{icon:1,time:1000});
+                    layer.close(tishi);
+                } else {
+                    layer.msg('替换失败!',{icon:1,time:1000});
+                    layer.close(tishi);
+                }
+            },
+            error:function(data) {
+                layer.close(tishi);
+                alert("网络延迟，请重新上传！");
+            }
+        });
+
+    }
+
+
+
+    /**
+     * 提交
+     */
+    function article_save_submit(){
+        var id = $("#title").attr("data-id");
+        var select = $("#select").val();
+        var title = $("#title").val();
+        var url = $("#url").val();
+        if(select == ''){
+            layer.msg('栏位不能为空 请选择栏位!',{icon:2,time:1000});
+            return;
+        }
+        if(url == ''){
+            layer.msg('地址不能为空 请填写地址!',{icon:2,time:1000});
+            return;
+        }
+        if(photoFile == ''){
+            layer.msg('图片不能为空 请选择图片!',{icon:2,time:1000});
+            return;
+        }
+        $.ajax({
+            url:"brandNewsEditSub",
+            type:"POST",
+            data: {
+                status:select,
+                title:title,
+                url:url,
+                id:id,
+            },
+            success: function(data) {
+                if (data.status == "200") {
+                    layer.msg('提交成功!',{icon:1,time:1000});
+                    window.setInterval(function (){
+                        parent.location.reload();
+                    },1000);
+                } else {
+                    layer.msg('提交失败!',{icon:1,time:1000});
+                    window.setInterval(function (){
+                        parent.location.reload();
+                    },1000);
+                }
+            },
+            error:function(data) {
+                alert("网络延迟，请重新上传！");
+            }
+        });
+    }
+</script>
+</body>
+</html>

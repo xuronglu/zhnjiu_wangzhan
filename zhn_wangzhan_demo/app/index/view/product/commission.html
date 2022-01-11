@@ -1,0 +1,42 @@
+{include file="index/header" /}
+<link rel="stylesheet" href="/static/index/static/news/css/index.css">
+  <div class="banner">
+    <img style="width: 100%;" class="img-fluid" src="/static/index/static/product/img/product-title.jpg" alt="产品广告">
+  </div>
+    <div class="container">
+        <nav aria-label="breadcrumb">
+            <ol class="breadcrumb" style="background-color: #fff;">
+              <li class="breadcrumb-item"><a style="color: #d60011" href="/">首页</a></li>
+              <li class="breadcrumb-item"><a style="color: #d60011" href="#">产品中心</a></li>
+              <li class="breadcrumb-item active" aria-current="page">定制中心</li>
+            </ol>
+        </nav>
+    </div>
+<div class="container">
+  <div style="text-align: center;color: #d60011;font-size: 30px;margin-bottom: 3%;font-weight: bold;">标准定制</div>
+  <div style="color: #d60011;font-size: 20px;margin-bottom: 2%;">紫红泥拥有行业先进定制设备，为您开启独一无二的尊荣定制。</div>
+  <div style="color: #d60011;font-size: 20px;margin-bottom: 2%;">每一瓶酒都由专业的设计师设计，不一样的紫红泥，给您不一样的惊喜。</div>
+  <div style="color: #d60011;font-size: 20px;margin-bottom: 2%;">您的每一次精彩，每一份喜悦，我们都会精心为您设计。</div>
+  <div style="color: #d60011;font-size: 20px;margin-bottom: 2%;">在匆匆忙忙的时光里，我们帮您留住每个难忘的记忆！</div>
+</div>
+<div class="container" style="margin-top: 3%;">
+  
+  <div class="col-md-4">
+      <img class="" src="/static/index/static/product/img/zhanshi.png" alt="新闻">
+  </div>
+  <div style="text-align: center;color: #d60011;font-size: 30px;margin-bottom: 5%;margin-top: 5%;">紫红泥部分定制客户展示</div>
+  <div class="row">
+    {volist name="list" id="vo"}
+    <div class="col-md-4" style="margin-bottom: 3%;">
+      <a class="news_a" href="javascript:void(0);">
+        <img style="width: 100%;border: 1px solid #eee;padding: 10%;" src="/storage/{$vo.img}" alt="新闻">
+      </a>
+    </div>
+    {/volist}
+  </div>
+  <!-- 分页 -->
+  {$page|raw}
+</div>
+
+  <!--    底部-->
+{include file="index/footer" /}

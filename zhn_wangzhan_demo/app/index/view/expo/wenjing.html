@@ -1,0 +1,57 @@
+{include file="index/header" /}
+<link rel="stylesheet" href="/static/index/static/news/css/index.css">
+<style>
+    .news_conter{
+        margin-bottom: 3rem;
+    }
+    .beijing1{
+        margin: 0;
+        padding: 0;
+        font-family: sans-serif;
+        background: url(/static/index/static/product/img/beijing2.png)  no-repeat center 0px;
+        background-size: cover;
+        background-position: center 0;
+        background-repeat: no-repeat;
+        -webkit-background-size: cover;
+        -o-background-size: cover;
+        -moz-background-size: cover;
+        -ms-background-size: cover;
+    }
+</style>
+  <div class="banner">
+    <img style="width: 100%;" class="img-fluid" src="/static/index/static/expo/img/wenjing_title.png" alt="产品广告">
+</div>
+<div class="beijing1">
+    <div class="container">
+        <nav aria-label="breadcrumb">
+            <ol class="breadcrumb" style="background-color: #fff;">
+              <li class="breadcrumb-item"><a style="color: #d60011" href="/">首页</a></li>
+              <li class="breadcrumb-item"><a style="color: #d60011" href="#">酒之博览</a></li>
+              <li class="breadcrumb-item active" aria-current="page">紫红泥文集</li>
+            </ol>
+        </nav>
+    </div>
+    <div class="container" style="margin-top: 5%;">
+    <div class="row">
+        {volist name='list' id='vo'}
+        <div class="col-md-4">
+        <a class="news_a" href="//{$vo.act_url}" target="_blank">
+            <img style="width: 100%;border: 1px solid #eee;" src="/storage/{$vo.act_img}" alt="新闻">
+            <div class="news_conter">{$vo.title}</div>
+        </a>
+        </div>
+        {/volist}
+<!--        <div class="col-md-4">-->
+<!--        <a class="news_a" href="https://mp.weixin.qq.com/s/6uNVHmGkIxqmIijtWkSmFw" target="_blank">-->
+<!--            <img style="width: 100%;border: 1px solid #eee;" src="/static/index/static/expo/img/weijing2.png" alt="新闻">-->
+<!--            <div class="news_conter">紫红泥茅台镇酱酒实体经济之四——茅台镇酱香酒经济发展的历史脉</div>-->
+<!--        </a>-->
+<!--        </div>-->
+    </div>
+    <!-- 分页 -->
+    {$page|raw}
+    </div>
+</div>
+
+  <!--    底部-->
+{include file="index/footer" /}
